@@ -9,8 +9,9 @@ const line_config = {
     channelAccessToken: process.env.LINE_ACCESS_TOKEN, // 環境変数からアクセストークンをセットしています
     channelSecret: process.env.LINE_CHANNEL_SECRET // 環境変数からChannel Secretをセットしています
 };
-const message_queue = ["こんにちは", "ご一緒に"];
-const reply_queue = ["これはこれは", "ホタテ"];
+const messageQueue = ["こんにちは", "ご一緒に", "ブックオフやって", "ビッグバーガーセット"];
+const replyQueue = ["これはこれは", "ホ↑タテ", "いらっしゃいませこんにちは！いらっしゃいませこんにちは！いらっしゃいませこんにちは！", "ビックバーガーを千個"];
+const unknown = "ちょっと何言ってるか分からない";
 
 // -----------------------------------------------------------------------------
 // Webサーバー設定
@@ -34,10 +35,10 @@ server.post('/bot/webhook', line.middleware(line_config), (req, res, next) => {
         // この処理の対象をイベントタイプがメッセージで、かつ、テキストタイプだった場合に限定。
         if (event.type == "message" && event.message.type == "text") {
             // ユーザーからのテキストメッセージが「こんにちは」だった場合のみ反応。
-            let reply = "ちょっと何言ってるか分からない";
-            for (let i=0; i<message_queue.length; i++) {
-                if (event.message.text == message_queue[i]){
-                    reply = reply_queue[i];
+            let reply = unknown;
+            for (let i=0; i<messageQueue.length; i++) {
+                if (event.message.text == messageQueue[i]){
+                    reply = replyQueue[i];
                     break;
                 }
             }
